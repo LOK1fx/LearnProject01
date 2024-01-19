@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &322370272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 322370273}
+  m_Layer: 0
+  m_Name: GroundChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &322370273
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322370272}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.808, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 862623587184955548}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &862623587184955549
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,6 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 862623587184955548}
+  - component: {fileID: 8086114781374874846}
   - component: {fileID: 8732379191404877951}
   - component: {fileID: 862623587184955537}
   - component: {fileID: 862623587184955539}
@@ -34,9 +66,26 @@ Transform:
   m_Children:
   - {fileID: 862623587515837129}
   - {fileID: 862623587267151312}
+  - {fileID: 322370273}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8086114781374874846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862623587184955549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d55eff43206bb41bf12e29c66e0aa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraTransform: {fileID: 862623587267151312}
+  ShootableLayerMask:
+    serializedVersion: 2
+    m_Bits: 62
 --- !u!114 &8732379191404877951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50,6 +99,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraTransform: {fileID: 862623587267151312}
+  Sensitivity: 150
+  MinViewAngle: -90
+  MaxViewAngle: -90
 --- !u!114 &862623587184955537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,8 +115,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rb: {fileID: 862623587184955538}
-  Speed: 100
-  JumpStrength: 120
+  GroundChecker: {fileID: 322370273}
+  GroundChecherRadius: 0.25
+  GroundLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  Speed: 7
+  JumpStrength: 250
+  IsOnGround: 0
 --- !u!136 &862623587184955539
 CapsuleCollider:
   m_ObjectHideFlags: 0
