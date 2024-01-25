@@ -1,31 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
 {
-    public AudioSource Source;
-    public AudioClip ShootSound01;
-    public Transform CameraTransform;
-    public LayerMask ShootableLayerMask;
+    [SerializeField] private AudioSource _source;
+    [SerializeField] private AudioClip _shootSound01;
+    [SerializeField] private LayerMask _shootableLayerMask;
+
+    private Player _currentPlayer;
+
+    public void Construct(Player player)
+    {
+        _currentPlayer = player;
+    }
 
     private void Update()
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Source.PlayOneShot(ShootSound01);
-            Debug.DrawRay(CameraTransform.position, CameraTransform.forward * 10000f, Color.red, 1f);
+            var cameraTransform = _currentPlayer.Camera.CameraTransform;
 
-            if (Physics.Raycast(CameraTransform.position, CameraTransform.forward, out RaycastHit hit, 10000f, ShootableLayerMask))
+            _source.PlayOneShot(_shootSound01);
+            Debug.DrawRay(cameraTransform.position, cameraTransform.forward * 10000f, Color.red, 1f);
+
+            if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out RaycastHit hit, 10000f, _shootableLayerMask))
             {
                 if (hit.collider.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
                 {
                     enemy.TakeDamage();
-                }
-
-                if (hit.collider.gameObject.TryGetComponent<ItemInfo>(out var item))
-                {
-                    item.PrintToConsole();
                 }
             }
         }

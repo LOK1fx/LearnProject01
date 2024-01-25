@@ -10,10 +10,15 @@ public class PlayerInteraction : MonoBehaviour
 
     [Space]
     [SerializeField] private LayerMask _interactableLayerMask;
-    [SerializeField] private Transform _playerCameraTransform;
-
 
     private bool _isInteracting;
+
+    private Player _currentPlayer;
+
+    public void Construct(Player player)
+    {
+        _currentPlayer = player;
+    }
 
     private void Update()
     {
@@ -21,12 +26,17 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (_isInteracting == false)
             {
-                if (Physics.Raycast(_playerCameraTransform.position, _playerCameraTransform.forward,
+                var cameraTransform = _currentPlayer.Camera.CameraTransform;
+
+                if (Physics.Raycast(cameraTransform.position, cameraTransform.forward,
                 out var hit, _interactionDistance, _interactableLayerMask))
                 {
-                    _isInteracting = true;
+                    if (hit.collider.gameObject.TryGetComponent<IInteractable>(out var interactable))
+                    {
+                        _isInteracting = true;
 
-                    OnInteractableFound?.Invoke(hit);
+                        OnInteractableFound?.Invoke(hit);
+                    }
                 }
             }
             else

@@ -1,36 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody), typeof(PlayerCamera), typeof(PlayerWeapon))]
+[RequireComponent(typeof(PlayerInteraction), typeof(PlayerInteractableInfo))]
 public class Player : MonoBehaviour
 {
-    //Модификатор доступа - public, Тип поля - Rigidbody, Название - Rb;
-    public Rigidbody Rb;
-    public Transform GroundChecker;
-    public float GroundChecherRadius;
-    public LayerMask GroundLayerMask;
+    public PlayerCamera Camera { get; private set; }
+    public PlayerWeapon Weapon { get; private set; }
+    public PlayerInteraction Interaction { get; private set; }
+    public PlayerInteractableInfo InteractableInfo { get; private set; }
 
-    public float Speed;
-    public float JumpStrength;
-    public bool IsOnGround;
 
-    // Start is called before the first frame update
-    private void Start()
+    [SerializeField] private Transform _groundChecker;
+    [SerializeField] private float _groundChecherRadius;
+    [SerializeField] private LayerMask _groundLayerMask;
+
+    [SerializeField] private float _movementSpeed;
+    [SerializeField] private float _movementSprintSpeed;
+    [SerializeField] private float _jumpStrength;
+
+    private bool _isOnGround;
+
+    private Rigidbody _rigidbody;
+
+    private void Awake()
     {
-        
+        _rigidbody = GetComponent<Rigidbody>();
+        Camera = GetComponent<PlayerCamera>();
+        Weapon = GetComponent<PlayerWeapon>();
+        Interaction = GetComponent<PlayerInteraction>();
+        InteractableInfo = GetComponent<PlayerInteractableInfo>();
+
+        Weapon.Construct(this);
+        Interaction.Construct(this);
+        InteractableInfo.Construct(this);
     }
 
     private void Update()
     {
-        Vector3 jumpVector = new Vector3(0, JumpStrength, 0);
+        Vector3 jumpVector = new Vector3(0, _jumpStrength, 0);
 
-        if (IsOnGround)
+        if (_isOnGround)
         {
             if (Input.GetButtonDown("Jump"))
             {
-                Rb.AddForce(jumpVector, ForceMode.Impulse);
+                _rigidbody.AddForce(jumpVector, ForceMode.Impulse);
 
-                IsOnGround = false;
+                _isOnGround = false;
             }
         }
     }
@@ -38,34 +53,41 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        IsOnGround = Physics.CheckSphere(GroundChecker.position, GroundChecherRadius, GroundLayerMask);
+        _isOnGround = Physics.CheckSphere(_groundChecker.position, _groundChecherRadius, _groundLayerMask);
 
         Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
 
         direction.Normalize();
         direction = transform.TransformDirection(direction);
-
-        if (IsOnGround)
+        
+        if (_isOnGround)
         {
-            Rb.velocity = direction * Speed;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                _rigidbody.velocity = direction * _movementSprintSpeed;
+            }
+            else
+            {
+                _rigidbody.velocity = direction * _movementSpeed;
+            }
         }
         else
         {
-            float projectVelocity = Vector3.Dot(Rb.velocity, direction);
-            float accelerationVelocity = Speed * Time.fixedDeltaTime * 2f;
+            float projectVelocity = Vector3.Dot(_rigidbody.velocity, direction);
+            float accelerationVelocity = _movementSpeed * Time.fixedDeltaTime * 2f;
 
-            if (projectVelocity + accelerationVelocity > Speed)
+            if (projectVelocity + accelerationVelocity > _movementSpeed)
             {
-                accelerationVelocity = Speed - projectVelocity;
+                accelerationVelocity = _movementSpeed - projectVelocity;
             }
 
-            Rb.velocity += direction * accelerationVelocity;
+            _rigidbody.velocity += direction * accelerationVelocity;
         }
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(GroundChecker.position, GroundChecherRadius);
+        Gizmos.DrawSphere(_groundChecker.position, _groundChecherRadius);
     }
 }

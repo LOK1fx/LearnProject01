@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider), typeof(Rigidbody))]
-public class InteractableDragAndDropObject : MonoBehaviour
+public class InteractableDragAndDropObject : MonoBehaviour, IInteractable
 {
     public Rigidbody Rigidbody { get; private set; }
     private Collider _collider;

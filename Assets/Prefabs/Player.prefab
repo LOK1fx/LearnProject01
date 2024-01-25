@@ -40,13 +40,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 862623587184955548}
-  - component: {fileID: 8086114781374874846}
-  - component: {fileID: 8732379191404877951}
   - component: {fileID: 862623587184955537}
-  - component: {fileID: 862623587184955539}
-  - component: {fileID: 862623587184955538}
+  - component: {fileID: 8732379191404877951}
+  - component: {fileID: 8086114781374874846}
   - component: {fileID: 1083228654541477460}
   - component: {fileID: 607826003807869936}
+  - component: {fileID: 852107741383080724}
+  - component: {fileID: 862623587184955539}
+  - component: {fileID: 862623587184955538}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -73,40 +74,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8086114781374874846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 862623587184955549}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98d55eff43206bb41bf12e29c66e0aa7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Source: {fileID: 2193898997733470943}
-  ShootSound01: {fileID: 8300000, guid: 61c31b0c7543df546b5a10c327206512, type: 3}
-  CameraTransform: {fileID: 862623587267151312}
-  ShootableLayerMask:
-    serializedVersion: 2
-    m_Bits: 63
---- !u!114 &8732379191404877951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 862623587184955549}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad2109b1c6d47b14a82c8a14b8e7ffb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CameraTransform: {fileID: 862623587267151312}
-  Sensitivity: 150
-  MinViewAngle: -90
-  MaxViewAngle: -90
 --- !u!114 &862623587184955537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,15 +86,93 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674650a1ae6ffe54e9bae5ba357971fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rb: {fileID: 862623587184955538}
-  GroundChecker: {fileID: 322370273}
-  GroundChecherRadius: 0.25
-  GroundLayerMask:
+  _groundChecker: {fileID: 322370273}
+  _groundChecherRadius: 0.25
+  _groundLayerMask:
     serializedVersion: 2
     m_Bits: 9
-  Speed: 7
-  JumpStrength: 250
-  IsOnGround: 0
+  _movementSpeed: 7
+  _movementSprintSpeed: 9
+  _jumpStrength: 250
+--- !u!114 &8732379191404877951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862623587184955549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2109b1c6d47b14a82c8a14b8e7ffb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraTransform: {fileID: 862623587267151312}
+  _sensitivity: 150
+  _minViewAngle: -90
+  _maxViewAngle: 90
+--- !u!114 &8086114781374874846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862623587184955549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d55eff43206bb41bf12e29c66e0aa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _source: {fileID: 2193898997733470943}
+  _shootSound01: {fileID: 8300000, guid: 61c31b0c7543df546b5a10c327206512, type: 3}
+  _shootableLayerMask:
+    serializedVersion: 2
+    m_Bits: 9
+--- !u!114 &1083228654541477460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862623587184955549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2a4b269db4836b4f97d4e68224deaa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionDistance: 2
+  _interactableLayerMask:
+    serializedVersion: 2
+    m_Bits: 9
+--- !u!114 &607826003807869936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862623587184955549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e8ccaf92e9fc864d97b2b4d6fca0a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dragParentTransform: {fileID: 6399947958606528918}
+--- !u!114 &852107741383080724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862623587184955549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e14ef912bd56aaf4da89d2903f9a59ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactableInfoShowDistance: 2
+  _interactableInfoCheckerInterval: 0.5
+  _interactableObjectsLayerMask:
+    serializedVersion: 2
+    m_Bits: 9
 --- !u!136 &862623587184955539
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -158,36 +203,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 2
---- !u!114 &1083228654541477460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 862623587184955549}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2a4b269db4836b4f97d4e68224deaa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interactionDistance: 2
-  _interactableLayerMask:
-    serializedVersion: 2
-    m_Bits: 9
-  _playerCameraTransform: {fileID: 862623587267151312}
---- !u!114 &607826003807869936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 862623587184955549}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e8ccaf92e9fc864d97b2b4d6fca0a6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dragParentTransform: {fileID: 6399947958606528918}
 --- !u!1 &862623587267151313
 GameObject:
   m_ObjectHideFlags: 0
